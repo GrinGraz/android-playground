@@ -13,7 +13,9 @@ fun MainNavigation(mainNavController: NavHostController = rememberNavController(
 
     NavHost(navController = mainNavController, startDestination = MainRoutes.Root.destination) {
         composable(route = MainRoutes.Root.destination) {
-            MainScreen()
+            MainScreen(
+                onItemClick = { mainNavController.navigate(MainRoutes.ItemDetails.destination) }
+            )
         }
         composable(route = MainRoutes.ItemDetails.destination) {
             ItemDetailsScreen(
