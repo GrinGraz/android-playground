@@ -14,13 +14,30 @@ fun MainNavigation(mainNavController: NavHostController = rememberNavController(
     NavHost(navController = mainNavController, startDestination = MainRoutes.Root.destination) {
         composable(route = MainRoutes.Root.destination) {
             MainScreen(
-                onItemClick = { mainNavController.navigate(MainRoutes.ItemDetails.destination) }
+                onItemClick = { itemId ->
+                    mainNavController.navigate(route = "itemDetails/$itemId")
+                }
             )
         }
-        composable(route = MainRoutes.ItemDetails.destination) {
+        composable(route = "itemDetails/{itemId}") {  backstackEntry ->
             ItemDetailsScreen(
                 itemId = 1
             )
         }
     }
 }
+
+/*
+
+  *Example of navigation with parameters*
+
+  navController.navigate("detail/123/JohnDoe")
+
+  composable("detail/{userId}") { backStackEntry ->
+      val userId = backStackEntry.arguments?.getString("userId")
+      //Use userId argument in your Screen
+  }
+
+*/
+
+
