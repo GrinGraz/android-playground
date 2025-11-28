@@ -5,39 +5,28 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.example.androidplayground.itemdetails.navigation.ItemDetailsRoutes
 import com.example.androidplayground.itemdetails.screen.ItemDetailsScreen
 import com.example.androidplayground.main.screen.MainScreen
 
 @Composable
 fun MainNavigation(mainNavController: NavHostController = rememberNavController()) {
 
-    NavHost(navController = mainNavController, startDestination = MainRoutes.Root.destination) {
-        composable(route = MainRoutes.Root.destination) {
+    NavHost(navController = mainNavController, startDestination = MainRoutes.Root) {
+        composable<MainRoutes.Root> {
             MainScreen(
                 onItemClick = { itemId ->
-                    mainNavController.navigate(route = "itemDetails/$itemId")
+                    mainNavController.navigate(ItemDetailsRoutes.Root(itemId))
                 }
             )
         }
-        composable(route = "itemDetails/{itemId}") {  backstackEntry ->
+
+        composable<ItemDetailsRoutes.Root> { backstackEntry ->
+            val item: ItemDetailsRoutes.Root = backstackEntry.toRoute()
             ItemDetailsScreen(
-                itemId = 1
+                itemId = item.itemId
             )
         }
     }
 }
-
-/*
-
-  *Example of navigation with parameters*
-
-  navController.navigate("detail/123/JohnDoe")
-
-  composable("detail/{userId}") { backStackEntry ->
-      val userId = backStackEntry.arguments?.getString("userId")
-      //Use userId argument in your Screen
-  }
-
-*/
-
-
