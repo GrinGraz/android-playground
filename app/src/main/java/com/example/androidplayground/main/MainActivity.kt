@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import com.example.androidplayground.common.data.AppDatabase
 import com.example.androidplayground.designsystem.AndroidPlaygroundTheme
+import com.example.androidplayground.login.navigation.LoginNavigation
 import com.example.androidplayground.main.navigation.MainNavigation
 
 class MainActivity : ComponentActivity() {
@@ -16,9 +19,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AndroidPlaygroundTheme() {
+            AndroidPlaygroundTheme {
                 Scaffold(modifier = Modifier.fillMaxSize().safeDrawingPadding()) { _ ->
-                    MainNavigation()
+
+                    if (AppDatabase.isActiveSession()) MainNavigation()
+                    else LoginNavigation()
+
                 }
             }
         }
